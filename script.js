@@ -286,7 +286,16 @@ function showMiniOverlay(label, message, durationMs, onDone) {
    See the chat response for SDK options and setup notes.
    --------------------------------------------------------- */
 function showRewardedAd(onReward) {
-  showMiniOverlay('ADVERTISEMENT', 'Ad playing... reward in 3s', 3000, onReward);
+  adBreak({
+    type: 'reward',
+    name: 'unlock-unlimited-attempts',
+    beforeReward: (showAdFn) => showAdFn(), // shows immediately when ready
+    adViewed: () => onReward(),             // only fires after a full watch
+    adDismissed: () => {                    // user backed out early
+      setHint('Ad skipped — reward not unlocked.', true);
+      syncUpgradeButtons();
+    },
+  });
 }
 
 /* ---------------------------------------------------------
