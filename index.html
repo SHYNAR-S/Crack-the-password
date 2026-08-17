@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PASSWORDLE // decrypt terminal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="crt-flicker" aria-hidden="true"></div>
+
+<main class="console">
+
+  <div class="console__chrome">
+    <div class="chrome__dots">
+      <span class="dot dot--a"></span>
+      <span class="dot dot--b"></span>
+      <span class="dot dot--c"></span>
+    </div>
+    <div class="chrome__title">root@passwordle:~$ decrypt --target=unknown</div>
+  </div>
+
+  <header class="console__header">
+    <h1 class="logo">
+      <span class="logo__bracket">[</span>PASSWORD<span class="logo__cursor">_</span><span class="logo__bracket">]</span>
+    </h1>
+    <p class="tagline">crack the password before you run out of attempts</p>
+  </header>
+
+  <section class="status-bar" aria-label="Breach parameters">
+    <div class="status-cell">
+      <span class="status-cell__label">LENGTH</span>
+      <span class="status-cell__value" id="lengthValue">--</span>
+    </div>
+    <div class="status-cell">
+      <span class="status-cell__label">ATTEMPTS LEFT</span>
+      <span class="status-cell__value" id="attemptsValue">--</span>
+    </div>
+    <div class="status-cell">
+      <span class="status-cell__label">STATUS</span>
+      <span class="status-cell__value status-cell__value--live" id="statusValue">SCANNING</span>
+    </div>
+  </section>
+
+  <section class="board" id="board" aria-live="polite"></section>
+
+  <div class="hints-strip" id="hintsStrip"></div>
+
+  <section class="composer">
+    <div class="composer__row">
+      <span class="composer__prompt">&gt;</span>
+      <input
+        type="text"
+        id="guessInput"
+        class="composer__input"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="enter your guess..."
+      >
+      <button id="guessButton" class="btn btn--primary">GUESS</button>
+      <button id="hintButton" class="btn btn--hint" title="Watch an ad for a free hint">💡 HINT</button>
+    </div>
+    <p class="composer__hint" id="hintText">Your guess must be the same length as the secret password.</p>
+  </section>
+
+  <section class="legend" aria-label="Color legend">
+    <div class="legend__item"><span class="chip chip--green"></span> correct position</div>
+    <div class="legend__item"><span class="chip chip--yellow"></span> in password, wrong spot</div>
+    <div class="legend__item"><span class="chip chip--gray"></span> not in password</div>
+  </section>
+
+  <section class="upgrades" aria-label="Power-ups">
+    <div class="upgrade-card">
+      <div class="upgrade-card__body">
+        <span class="upgrade-card__title">THIS ROUND ONLY · UNLIMITED ATTEMPTS</span>
+        <span class="upgrade-card__sub">watch a short ad to unlock</span>
+      </div>
+      <div class="upgrade-card__cta">
+        <button class="btn btn--upgrade" id="watchAdBtn">▶ WATCH AD</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="charset" aria-label="Allowed characters">
+    <p class="charset__title">CHARSET — the password is built from these characters</p>
+    <table class="charset__table">
+      <tbody>
+        <tr>
+          <td class="charset__key">upper</td>
+          <td class="charset__value">ABCDEFGHIJKLMNOPQRSTUVWXYZ</td>
+        </tr>
+        <tr>
+          <td class="charset__key">lower</td>
+          <td class="charset__value">abcdefghijklmnopqrstuvwxyz</td>
+        </tr>
+        <tr>
+          <td class="charset__key">digits</td>
+          <td class="charset__value">0123456789</td>
+        </tr>
+        <tr>
+          <td class="charset__key">special</td>
+          <td class="charset__value">!@#$%&amp;*?</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="overlay__card">
+    <button class="overlay__close" id="overlayClose" aria-label="Close and review attempts">&times;</button>
+    <p class="overlay__icon" id="overlayIcon">🎉</p>
+    <h2 class="overlay__title" id="overlayTitle">PASSWORD CRACKED!</h2>
+    <p class="overlay__detail" id="overlayDetail">Attempts used: 0</p>
+    <p class="overlay__secret" id="overlaySecret"></p>
+    <div class="overlay__actions">
+      <button class="btn btn--ghost" id="overlayCloseSecondary">CLOSE</button>
+      <button class="btn btn--primary" id="overlayButton">PLAY AGAIN</button>
+    </div>
+  </div>
+</div>
+
+<div class="mini-overlay" id="miniOverlay">
+  <div class="mini-overlay__card">
+    <p class="mini-overlay__label" id="miniOverlayLabel">ADVERTISEMENT</p>
+    <p class="mini-overlay__message" id="miniOverlayMessage">Hint unlocks in 3s...</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
