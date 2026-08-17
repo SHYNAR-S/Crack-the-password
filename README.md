@@ -1,5 +1,3 @@
-crackpswrd
-
 # PASSWORD
 
 ```text
